@@ -19,17 +19,19 @@ namespace EliteVoice.ConfigReader.Commands
                 string parameter = getProperties()["select"];
                 if (parameters.ContainsKey(parameter))
                 {
-                    text = string.Format("{0:#,##}",parameters[parameter]);
+                    //text = string.Format("{0:F0}",parameters[parameter]);
+                    text = string.Format("{0:#.##;#.##;0}", parameters[parameter]);
+                    logger.log("Text Select = " + text);
                 }
             }
             else if (getProperties().ContainsKey("@text"))
             {
                 text = getProperties()["@text"];
-				//logger.log("Replacers count " + EventContext.instance.replacers.Count);
-				foreach (Replacer rp in EventContext.instance.replacers)
+                //logger.log("Replacers count " + EventContext.instance.replacers.Count);
+                foreach (Replacer rp in EventContext.instance.replacers)
 				{
 					text = rp.Replace(text);
-				}
+                }
             }
 
             if (text != null && text.Length > 0)

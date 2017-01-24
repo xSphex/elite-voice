@@ -5,186 +5,113 @@
     <Replace source="StarSystem" match="Euryale" replace="Эври_ала"/>
     <Replace match="в порту" replace="в порт_у"/>
     <Replace match="стороны" replace="сторон_ы"/>
-    <Replace match="обо всем" replace="обо всём"/>
-    <Replace match="сосала" replace="пинала"/>
-    <Replace match="сушку" replace="кошку"/>
-    <Replace match="ур." replace="уровень"/>
-    <Replace match="Высок." replace="Высокий"/>
-    <Replace match="Низк." replace="Низкий"/>
-    <TextToSpeech voice="Anna" volume="50" rate="1"/>
-    <Text>Шла Саша по шоссе и сосала сушку</Text>
+    <TextToSpeech voice="Anna" volume="50" rate="0"/>
   </Init>
   <!-- Загрузка игры открытая/соло/ЧГ -->
-  <Event name="LoadGame">
-    <!-- <Play name="first" file="sound\08207.mp3" volume="40" async="true"/>  -->
-    <Randomize>
-      <Block priority="1">
-        <TextToSpeech voice="Anna"/>
-      </Block>
-      <Block priority="2">
-        <TextToSpeech voice="Irina"/>
-      </Block>
-      <Block priority="3">
-        <TextToSpeech voice="Elena"/>
-      </Block>
-      <Block priority="4">
-        <TextToSpeech voice="Aleksandr"/>
-      </Block>
-    </Randomize>
-    <Text>Добро пожаловать на борт, капитан!</Text>
-  </Event>
+	<Event name="LoadGame">
+		<Play name="first" file="sound\08207.mp3" volume="40" async="true"/>
+		<Randomize>
+			<Block priority="1">
+				<TextToSpeech voice="Anna"/>
+			</Block>
+			<Block priority="2">
+				<TextToSpeech voice="Irina"/>
+			</Block>
+			<Block priority="3">
+				<TextToSpeech voice="Elena"/>
+			</Block>
+			<Block priority="4">
+				<TextToSpeech voice="Aleksandr"/>
+			</Block>
+		</Randomize>
+		<Text>Добро пожаловать на борт, капитан!</Text>
+	</Event>
   <!-- Информация о текущем положении после загрузки игры -->
-  <Event name="Location">
+	<Event name="Location">
     <Text>Если Вы по какой-то причине не помните, где находитесь, то предлагаю Вам прослушать краткую сводку.</Text>
-    <Pause value="500"/>
+		<Pause value="500"/>
     <Switch select="Docked">
-      <Case iequal="true">
-        <Text>Вы находитесь на станции</Text>
-        <Text select="StationName"/>
-        <Text>в системе</Text>
-        <Text select="StarSystem"/>
-      </Case>
-      <Default>
-        <Text>Вы находитесь в какихто гребен_ях</Text>
-        <Pause value="100"/>
-        <Text>в системе</Text>
-        <Text select="StarSystem"/>
-      </Default>
-    </Switch>
-    <Pause value="500"/>
+			<Case iequal="true">
+				<Text>Вы находитесь на станции</Text>
+				<Text select="StationName"/>
+				<Text>в системе</Text>
+				<Text select="StarSystem"/>
+			</Case>
+			<Default>
+				<Text>Вы находитесь в какихто гребен_ях</Text>
+				<Pause value="100"/>
+				<Text>в системе</Text>
+				<Text select="StarSystem"/>
+			</Default>
+		</Switch>
+		<Pause value="500"/>
     <Stop name="first" fade="3000"/>
     <Text>Удачи, капитан</Text>
     <TextToSpeech voice="Anna" volume="50" rate="0"/>
   </Event>
   <!-- Завершение гиперпрыжка -->
-  <Event name="FSDJump">
-    <TextToSpeech>
-      <Text>Прыжок совершон.</Text>
-      <Pause value="500"/>
-      <Text>Система: </Text>
-      <Text select="StarSystem"/>
-      <Text>Под управлением: </Text>
-      <Text select="SystemAllegiance"/>
-      <Text>Основа экономики: </Text>
-      <Text select="SystemEconomy_Localised"/>
-      <Text>Состояние: </Text>
-      <Text select="FactionState"/>
-      <Text>Тип правительства: </Text>
-      <Text select="SystemGovernment_Localised"/>
-      <Text select="SystemSecurity_Localised"/>
-    </TextToSpeech>
-  </Event>
+	<Event name="FSDJump">
+		<TextToSpeech>
+			<Text>Прыжок совершон.</Text>
+			<Pause value="500"/>
+			<Text>Система: </Text>
+			<Text select="StarSystem"/>
+		</TextToSpeech>
+	</Event>
   <!-- Завершение перехвата игрока npc/игроком -->
-  <Event name="Interdicted">
-    <TextToSpeech>
-      <Text>Внимание! Какой муд_ак нас пытается перехватить.</Text>
-    </TextToSpeech>
-  </Event>
+	<Event name="Interdicted">
+		<TextToSpeech>
+			<Text>Внимание! Какой муд_ак нас пытается перехватить.</Text>
+		</TextToSpeech>
+	</Event>
   <!-- После входа в суперкруиз -->
-  <Event name="SupercruiseEntry">
-    <TextToSpeech>
-      <Text>Входим в суперкруиз.</Text>
-    </TextToSpeech>
-    <Play file="sound\dveri zakrivayutsya.wav" volume="10"/>
-  </Event>
+	<Event name="SupercruiseEntry">
+		<TextToSpeech>
+			<Text>Входим в суперкруиз.</Text>
+		</TextToSpeech>
+		<Play file="sound\dveri zakrivayutsya.wav" volume="20"/>
+	</Event>
   <!-- После выхода из суперкруиза -->
-  <Event name="SupercruiseExit">
-    <Play file="sound\dveri zakrivayutsya 2.wav" volume="10" async="true"/>
-  </Event>
-  <!-- Получение текстового сообщения -->
-  <Event name="ReceiveText">
-    <TextToSpeech>
-      <Text>Новое сообщение от</Text>
-      <Switch select="From_Localised">
-        <Case equal="">
-          <Text select="From"/>
-        </Case>
-        <Default>
-          <Text select="From_Localised"/>
-        </Default>
-      </Switch>
-      <Pause value="500"/>
-      <Randomize>
-        <Block priority="1">
-          <TextToSpeech voice="Irina"/>
-        </Block>
-        <Block priority="1">
-          <TextToSpeech voice="Elena"/>
-        </Block>
-        <Block priority="1">
-          <TextToSpeech voice="Anna"/>
-        </Block>
-        <Block priority="1">
-          <TextToSpeech voice="Aleksandr"/>
-        </Block>
-      </Randomize>
-      <Switch select="Channel">
-        <Case imatch="(player|wing)">
-          <TextToSpeech voice="Aleksandr">
-            <Text select="Message"/>
+	<Event name="SupercruiseExit">
+		<Play file="sound\dveri zakrivayutsya 2.wav" volume="20" async="true"/>
+	</Event>
+   <!-- Получение текстового сообщения -->
+	<Event name="ReceiveText">
+		<TextToSpeech>
+			<Text>Новое сообщение от</Text>
+			<Switch select="From_Localised">
+				<Case equal="">
+					<Text select="From"/>
+				</Case>
+				<Default>
+					<Text select="From_Localised"/>
+				</Default>
+			</Switch>
+			<Pause value="500"/>
+			<Randomize>
+				<Block priority="1">
+					<TextToSpeech voice="Irina"/>
+				</Block>
+				<Block priority="1">
+					<TextToSpeech voice="Elena"/>
+				</Block>
+				<Block priority="1">
+					<TextToSpeech voice="Anna"/>
+				</Block>
+				<Block priority="1">
+					<TextToSpeech voice="Aleksandr"/>
+				</Block>
+			</Randomize>
+			<Switch select="Channel">
+				<Case imatch="(player|wing)">
+					<TextToSpeech voice="Aleksandr">
+					  <Text select="Message"/>
           </TextToSpeech>
-        </Case>
-        <Default>
-          <Text select="Message_Localised"/>
-        </Default>
-      </Switch>
-    </TextToSpeech>
-  </Event>
-  <!-- Заправка -->
-  <Event name="RefuelAll">
-    <TextToSpeech>
-      <Text>Корабль заправлен.</Text>
-      <Text>С вас</Text>
-      <Text select="Cost"/>
-      <Text>кредитов.</Text>
-    </TextToSpeech>
-  </Event>
-  <!-- Ремонт -->
-  <Event name="RepairAll">
-    <TextToSpeech>
-      <Text>Корабль отремонтирован.</Text>
-      <Pause value="50"/>
-      <Text>С вас:</Text>
-      <Text select="Cost"/>
-      <Text>кредитов.</Text>
-    </TextToSpeech>
-  </Event>
-  <!-- Задание завершено -->
-  <Event name="MissionCompleted">
-    <TextToSpeech>
-      <Text>Задание успешно завершено.</Text>
-      <Text>Награда: </Text>
-      <Text select="Reward"/>
-      <Text>кредитов.</Text>
-    </TextToSpeech>
-  </Event>
-  <!-- Стыковка разрешена -->
-  <Event name="DockingGranted">
-    <TextToSpeech>
-      <Text>Стыковка разрешена.</Text>
-    </TextToSpeech>
-  </Event>
-  <!-- Стыковка запрошена -->
-  <Event name="DockingRequested">
-    <TextToSpeech>
-      <Text>Стыковка запрошена.</Text>
-    </TextToSpeech>
-  </Event>
-  <!-- Стыковка -->
-  <Event name="Docked">
-    <TextToSpeech>
-      <Text>Станция: </Text>
-      <Text select="StationName"/>
-      <Text>Тип: </Text>
-      <Text select="StationType"/>
-      <Text>Под управлением: </Text>
-      <Text select="StationAllegiance"/>
-      <Text>Основа экономики: </Text>
-      <Text select="StationEconomy_Localised"/>
-      <Text>Состояние: </Text>
-      <Text select="FactionState"/>
-      <Text>Тип правительства: </Text>
-      <Text select="StationGovernment_Localised"/>
-    </TextToSpeech>
-  </Event>
+				</Case>
+				<Default>
+					<Text select="Message_Localised"/>
+				</Default>
+			</Switch>
+		</TextToSpeech>
+	</Event>
 </Configuration>
